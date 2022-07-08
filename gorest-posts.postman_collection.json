@@ -232,14 +232,22 @@
 									"});\r",
 									"\r",
 									"\r",
-									"\r",
+									"/*\r",
 									"pm.test(\"Resource was found\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData).to.be.an(\"array\");\r",
 									"    pm.expect(jsonData).to.not.include.all.keys('message');\r",
 									"    pm.expect(jsonData.message).to.not.eql(\"Resource not found\");\r",
 									"});\r",
+									"*/\r",
 									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Resource was found\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData).to.not.be.empty;\r",
+									"});\r",
 									"\r",
 									"\r",
 									"pm.test(\"Response includes correct data fields\", function(){\r",
@@ -484,21 +492,31 @@
 									"\r",
 									"\r",
 									"pm.test(\"Response includes correct message\", function(){\r",
-									"    var jsonData = pm.response.json()[0];\r",
-									"    pm.expect(jsonData).to.be.an(\"object\");\r",
-									"    \r",
-									"    pm.expect(jsonData).to.include.all.keys('field', 'message');\r",
-									"    \r",
+									"    var jsonData = pm.response.json();    \r",
 									"\r",
-									"    pm.expect(jsonData.field).to.eql(\"user\");\r",
-									"    pm.expect(jsonData.message).to.eql(\"must exist\");\r",
+									"    var msg1 = {field: \"user\", message: \"must exist\"};\r",
+									"    var msg2={\r",
+									"        \"field\": \"user_id\",\r",
+									"        \"message\": \"can't be blank, is not a number\"\r",
+									"    };\r",
+									"\r",
+									"    var rsp = [msg1,msg2];\r",
+									"    var fields = [msg1.field, msg2.field];\r",
 									"\r",
 									"\r",
-									"    jsonData = pm.response.json()[1];\r",
-									"    pm.expect(jsonData).to.be.an(\"object\");\r",
 									"\r",
-									"    pm.expect(jsonData.field).to.eql(\"user_id\");\r",
-									"    pm.expect(jsonData.message).to.eql(\"can't be blank, is not a number\");\r",
+									"    jsonData.forEach((function(obj){\r",
+									"        console.log(obj);\r",
+									"\r",
+									"        pm.expect(obj).to.have.keys(\"field\", \"message\");\r",
+									"        pm.expect(obj.field).to.be.oneOf(fields);\r",
+									"        \r",
+									"        var index = fields.indexOf(obj.field);\r",
+									"\r",
+									"        pm.expect(obj.message).to.eql(rsp[index].message);\r",
+									"\r",
+									"\r",
+									"    }));\r",
 									"\r",
 									"});\r",
 									""
@@ -698,8 +716,86 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Only 1 post was created",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('max-age=0, private, must-revalidate');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Resource was found\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData).to.not.include.all.keys('message');\r",
+									"    pm.expect(jsonData.message).to.not.eql(\"Resource not found\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Returned array of user's posts contains only 1 object\", function() {\r",
+									"\r",
+									"    pm.expect(pm.response.json()).to.have.length(1);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{urlUsers}}/{{user_id}}/posts",
+							"host": [
+								"{{urlUsers}}"
+							],
+							"path": [
+								"{{user_id}}",
+								"posts"
+							]
+						},
+						"description": "Test that only a valid post was created. Array of returned user's posts should include only 1 item with valid data."
+					},
+					"response": []
 				}
 			]
+		},
+		{
+			"name": "delete",
+			"item": []
 		},
 		{
 			"name": "TEARDOWN",
