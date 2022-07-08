@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "08fdbf22-5e41-488c-8945-b23f0e1c09f1",
+		"_postman_id": "fe9792c7-235d-4129-aa43-e62ce70a5875",
 		"name": "gorest-users",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "21768486"
@@ -55,12 +55,12 @@
 									"pm.test(\"POST response data valid\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    \r",
-									"    pm.globals.set(\"id\", jsonData.id);\r",
+									"    pm.collectionVariables.set(\"id\", jsonData.id);\r",
 									"    \r",
-									"    pm.expect(jsonData.name).to.eql(pm.globals.get(\"name\"));\r",
-									"    pm.expect(jsonData.email).to.eql(pm.globals.get(\"email\"));\r",
-									"    pm.expect(jsonData.gender).to.eql(pm.globals.get(\"gender\"));\r",
-									"    pm.expect(jsonData.status).to.eql(pm.globals.get(\"status\"));\r",
+									"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"name\"));\r",
+									"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email\"));\r",
+									"    pm.expect(jsonData.gender).to.eql(pm.collectionVariables.get(\"gender\"));\r",
+									"    pm.expect(jsonData.status).to.eql(pm.collectionVariables.get(\"status\"));\r",
 									"\r",
 									"});"
 								],
@@ -250,11 +250,11 @@
 									"pm.test(\"Response data is valid\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"\r",
-									"    pm.expect(jsonData.id).to.eql(pm.globals.get(\"id\"));\r",
-									"    pm.expect(jsonData.name).to.eql(pm.globals.get(\"name\"));\r",
-									"    pm.expect(jsonData.email).to.eql(pm.globals.get(\"email\"));\r",
-									"    pm.expect(jsonData.gender).to.eql(pm.globals.get(\"gender\"));\r",
-									"    pm.expect(jsonData.status).to.eql(pm.globals.get(\"status\"));\r",
+									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"id\"));\r",
+									"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"name\"));\r",
+									"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email\"));\r",
+									"    pm.expect(jsonData.gender).to.eql(pm.collectionVariables.get(\"gender\"));\r",
+									"    pm.expect(jsonData.status).to.eql(pm.collectionVariables.get(\"status\"));\r",
 									"\r",
 									"});"
 								],
@@ -339,11 +339,11 @@
 											"   \r",
 											"    var jsonData = pm.response.json();\r",
 											"\r",
-											"    pm.expect(jsonData.id).to.eql(pm.globals.get(\"id\"));\r",
-											"    pm.expect(jsonData.name).to.eql(pm.globals.get(\"namePatch\"));\r",
-											"    pm.expect(jsonData.email).to.eql(pm.globals.get(\"email\"));\r",
-											"    pm.expect(jsonData.gender).to.eql(pm.globals.get(\"gender\"));\r",
-											"    pm.expect(jsonData.status).to.eql(pm.globals.get(\"status\"));\r",
+											"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"id\"));\r",
+											"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"namePatch\"));\r",
+											"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email\"));\r",
+											"    pm.expect(jsonData.gender).to.eql(pm.collectionVariables.get(\"gender\"));\r",
+											"    pm.expect(jsonData.status).to.eql(pm.collectionVariables.get(\"status\"));\r",
 											"\r",
 											"});\r",
 											""
@@ -423,11 +423,11 @@
 											"pm.test(\"POST response data valid\", function () {\r",
 											"    var jsonData = pm.response.json();\r",
 											"    \r",
-											"    pm.expect(jsonData.id).to.eql(pm.globals.get(\"id\"));\r",
-											"    pm.expect(jsonData.name).to.eql(pm.globals.get(\"namePatch\"));\r",
-											"    pm.expect(jsonData.email).to.eql(pm.globals.get(\"email\"));\r",
-											"    pm.expect(jsonData.gender).to.eql(pm.globals.get(\"gender\"));\r",
-											"    pm.expect(jsonData.status).to.eql(pm.globals.get(\"status\"));\r",
+											"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"id\"));\r",
+											"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"namePatch\"));\r",
+											"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email\"));\r",
+											"    pm.expect(jsonData.gender).to.eql(pm.collectionVariables.get(\"gender\"));\r",
+											"    pm.expect(jsonData.status).to.eql(pm.collectionVariables.get(\"status\"));\r",
 											"\r",
 											"});"
 										],
@@ -574,11 +574,11 @@
 											"pm.test(\"POST response data valid\", function () {\r",
 											"    var jsonData = pm.response.json();\r",
 											"    \r",
-											"    pm.expect(jsonData.id).to.eql(pm.globals.get(\"id\"));\r",
-											"    pm.expect(jsonData.name).to.eql(pm.globals.get(\"namePatch\"));\r",
-											"    pm.expect(jsonData.email).to.eql(pm.globals.get(\"email\"));\r",
-											"    pm.expect(jsonData.gender).to.eql(pm.globals.get(\"gender\"));\r",
-											"    pm.expect(jsonData.status).to.eql(pm.globals.get(\"status\"));\r",
+											"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"id\"));\r",
+											"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"namePatch\"));\r",
+											"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email\"));\r",
+											"    pm.expect(jsonData.gender).to.eql(pm.collectionVariables.get(\"gender\"));\r",
+											"    pm.expect(jsonData.status).to.eql(pm.collectionVariables.get(\"status\"));\r",
 											"\r",
 											"});"
 										],
@@ -725,11 +725,11 @@
 											"pm.test(\"POST response data valid\", function () {\r",
 											"    var jsonData = pm.response.json();\r",
 											"    \r",
-											"    pm.expect(jsonData.id).to.eql(pm.globals.get(\"id\"));\r",
-											"    pm.expect(jsonData.name).to.eql(pm.globals.get(\"namePatch\"));\r",
-											"    pm.expect(jsonData.email).to.eql(pm.globals.get(\"email\"));\r",
-											"    pm.expect(jsonData.gender).to.eql(pm.globals.get(\"gender\"));\r",
-											"    pm.expect(jsonData.status).to.eql(pm.globals.get(\"status\"));\r",
+											"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"id\"));\r",
+											"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"namePatch\"));\r",
+											"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email\"));\r",
+											"    pm.expect(jsonData.gender).to.eql(pm.collectionVariables.get(\"gender\"));\r",
+											"    pm.expect(jsonData.status).to.eql(pm.collectionVariables.get(\"status\"));\r",
 											"\r",
 											"});"
 										],
@@ -881,11 +881,11 @@
 											"pm.test(\"POST response data valid\", function () {\r",
 											"    var jsonData = pm.response.json();\r",
 											"    \r",
-											"    pm.expect(jsonData.id).to.eql(pm.globals.get(\"id\"));\r",
-											"    pm.expect(jsonData.name).to.eql(pm.globals.get(\"namePatch\"));\r",
-											"    pm.expect(jsonData.email).to.eql(pm.globals.get(\"email\"));\r",
-											"    pm.expect(jsonData.gender).to.eql(pm.globals.get(\"gender\"));\r",
-											"    pm.expect(jsonData.status).to.eql(pm.globals.get(\"status\"));\r",
+											"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"id\"));\r",
+											"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"namePatch\"));\r",
+											"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email\"));\r",
+											"    pm.expect(jsonData.gender).to.eql(pm.collectionVariables.get(\"gender\"));\r",
+											"    pm.expect(jsonData.status).to.eql(pm.collectionVariables.get(\"status\"));\r",
 											"\r",
 											"});"
 										],
@@ -1037,11 +1037,11 @@
 											"pm.test(\"POST response data valid\", function () {\r",
 											"    var jsonData = pm.response.json();\r",
 											"    \r",
-											"    pm.expect(jsonData.id).to.eql(pm.globals.get(\"id\"));\r",
-											"    pm.expect(jsonData.name).to.eql(pm.globals.get(\"namePatch\"));\r",
-											"    pm.expect(jsonData.email).to.eql(pm.globals.get(\"email\"));\r",
-											"    pm.expect(jsonData.gender).to.eql(pm.globals.get(\"gender\"));\r",
-											"    pm.expect(jsonData.status).to.eql(pm.globals.get(\"status\"));\r",
+											"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"id\"));\r",
+											"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"namePatch\"));\r",
+											"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email\"));\r",
+											"    pm.expect(jsonData.gender).to.eql(pm.collectionVariables.get(\"gender\"));\r",
+											"    pm.expect(jsonData.status).to.eql(pm.collectionVariables.get(\"status\"));\r",
 											"\r",
 											"});"
 										],
@@ -1093,6 +1093,13 @@
 									"\r",
 									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
 									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response is empty\", function () {\r",
+									"\r",
+									"    pm.response.to.not.be.withBody;\r",
+									"    \r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1211,8 +1218,39 @@
 	],
 	"variable": [
 		{
-			"key": "response_id",
-			"value": ""
+			"key": "name",
+			"value": "Bob Smith",
+			"type": "string"
+		},
+		{
+			"key": "namePatch",
+			"value": "Bob Builder",
+			"type": "string"
+		},
+		{
+			"key": "nameLong",
+			"value": "bobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbobbob",
+			"type": "string"
+		},
+		{
+			"key": "email",
+			"value": "bobthebuilder@bobsemail.com",
+			"type": "string"
+		},
+		{
+			"key": "gender",
+			"value": "male",
+			"type": "string"
+		},
+		{
+			"key": "status",
+			"value": "active",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
