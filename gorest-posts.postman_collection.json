@@ -235,7 +235,7 @@
 									"\r",
 									"pm.test(\"Resource was found\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
 									"    pm.expect(jsonData).to.not.include.all.keys('message');\r",
 									"    pm.expect(jsonData.message).to.not.eql(\"Resource not found\");\r",
 									"});\r",
@@ -243,7 +243,7 @@
 									"\r",
 									"\r",
 									"pm.test(\"Response includes correct data fields\", function(){\r",
-									"    var jsonData = pm.response.json();\r",
+									"    var jsonData = pm.response.json()[0];\r",
 									"    pm.expect(jsonData).to.be.an(\"object\");\r",
 									"    \r",
 									"    pm.expect(jsonData).to.include.all.keys('id', 'user_id', 'title','body');\r",
@@ -256,7 +256,7 @@
 									"\r",
 									"\r",
 									"pm.test(\"Response data is valid\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
+									"    var jsonData = pm.response.json()[0];\r",
 									"\r",
 									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"post_id\"));\r",
 									"    pm.expect(jsonData.user_id).to.eql(pm.collectionVariables.get(\"user_id\"));\r",
@@ -280,12 +280,420 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{urlPosts}}/{{post_id}}",
+							"raw": "{{urlUsers}}/{{user_id}}/posts",
 							"host": [
-								"{{urlPosts}}"
+								"{{urlUsers}}"
 							],
 							"path": [
-								"{{post_id}}"
+								"{{user_id}}",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new post without title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('no-cache');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response includes correct message\", function(){\r",
+									"    var jsonData = pm.response.json()[0];\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    \r",
+									"    pm.expect(jsonData).to.include.all.keys('field', 'message');\r",
+									"    \r",
+									"    pm.expect(jsonData.field).to.eql(\"title\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"can't be blank\");\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "{{post_body}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{urlPosts}}",
+							"host": [
+								"{{urlPosts}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new post without body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('no-cache');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response includes correct message\", function(){\r",
+									"    var jsonData = pm.response.json()[0];\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    \r",
+									"    pm.expect(jsonData).to.include.all.keys('field', 'message');\r",
+									"    \r",
+									"    pm.expect(jsonData.field).to.eql(\"body\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"can't be blank\");\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "{{post_title}}",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{urlPosts}}",
+							"host": [
+								"{{urlPosts}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new post without user_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('no-cache');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response includes correct message\", function(){\r",
+									"    var jsonData = pm.response.json()[0];\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    \r",
+									"    pm.expect(jsonData).to.include.all.keys('field', 'message');\r",
+									"    \r",
+									"\r",
+									"    pm.expect(jsonData.field).to.eql(\"user\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"must exist\");\r",
+									"\r",
+									"\r",
+									"    jsonData = pm.response.json()[1];\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"\r",
+									"    pm.expect(jsonData.field).to.eql(\"user_id\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"can't be blank, is not a number\");\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "{{post_title}}",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "{{post_body}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{urlPosts}}",
+							"host": [
+								"{{urlPosts}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new post with long body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('no-cache');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response includes correct message\", function(){\r",
+									"    var jsonData = pm.response.json()[0];\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    \r",
+									"    pm.expect(jsonData).to.include.all.keys('field', 'message');\r",
+									"    \r",
+									"    pm.expect(jsonData.field).to.eql(\"body\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"is too long (maximum is 500 characters)\");\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "{{post_title}}",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "{{post_body_long}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{urlPosts}}",
+							"host": [
+								"{{urlPosts}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new post with long title",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('no-cache');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response includes correct message\", function(){\r",
+									"    var jsonData = pm.response.json()[0];\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    \r",
+									"    pm.expect(jsonData).to.include.all.keys('field', 'message');\r",
+									"    \r",
+									"    pm.expect(jsonData.field).to.eql(\"title\");\r",
+									"    pm.expect(jsonData.message).to.eql(\"is too long (maximum is 200 characters)\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "{{post_body_long}}",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "{{post_body}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{urlPosts}}",
+							"host": [
+								"{{urlPosts}}"
 							]
 						}
 					},
@@ -294,10 +702,10 @@
 			]
 		},
 		{
-			"name": "YYY",
+			"name": "TEARDOWN",
 			"item": [
 				{
-					"name": "delete user",
+					"name": "[[TEARDOWN]] delete user",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -385,6 +793,11 @@
 		{
 			"key": "post_body",
 			"value": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis a nisl a nunc sollicitudin sollicitudin. Nulla a gravida velit, quis lobortis nunc. Nam sit amet risus at dolor pretium dictum. Praesent non urna leo. Quisque aliquam, ipsum in rutrum tempor, turpis odio tempor nulla, a pretium purus odio nec erat. In metus ligula, auctor nec arcu quis, elementum sagittis lacus.",
+			"type": "string"
+		},
+		{
+			"key": "post_body_long",
+			"value": "Maecenas mi arcu, laoreet sagittis lacus sit amet, volutpat hendrerit sem. Pellentesque nec nibh mauris. Aliquam erat volutpat. Pellentesque a tellus non diam auctor eleifend. Aliquam eleifend sed odio semper malesuada. Nullam viverra enim ac tortor sodales, vel rutrum eros finibus. Phasellus lacus nibh, fringilla at ligula non, lacinia suscipit nibh. Nulla in venenatis metus, non euismod nunc. Fusce tincidunt felis vitae condimentum aliquet. Nullam vel suscipit nunc. Mauris sagittis et nibh nec scelerisque. Ut pulvinar sodales lectus a sapien.",
 			"type": "string"
 		}
 	]
