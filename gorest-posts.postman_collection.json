@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "5522de64-03f6-4a8d-8a6e-b6ef20e70eea",
+		"name": "gorest-posts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21768486"
+	},
+	"item": [
+		{
+			"name": "SETUP",
+			"item": [
+				{
+					"name": "[[SETUP]] Create new user for posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('max-age=0, private, must-revalidate');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response includes correct data fields\", function(){\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    \r",
+									"    pm.expect(jsonData).to.include.all.keys('id', 'name', 'email','gender','status');\r",
+									"     \r",
+									"    pm.expect(jsonData.id).to.be.finite;\r",
+									"    pm.expect(jsonData.name).to.be.a('string');\r",
+									"    pm.expect(jsonData.email).to.be.a('string');\r",
+									"    pm.expect(jsonData.gender).to.be.a('string');\r",
+									"    pm.expect(jsonData.status).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"POST response data valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    pm.collectionVariables.set(\"user_id\", jsonData.id);\r",
+									"    \r",
+									"    pm.expect(jsonData.name).to.eql(pm.collectionVariables.get(\"user_name\"));\r",
+									"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"user_email\"));\r",
+									"    pm.expect(jsonData.gender).to.eql(pm.collectionVariables.get(\"user_gender\"));\r",
+									"    pm.expect(jsonData.status).to.eql(pm.collectionVariables.get(\"user_status\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{user_name}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{user_email}}",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "{{user_gender}}",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "{{user_status}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{urlUsers}}",
+							"host": [
+								"{{urlUsers}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "create",
+			"item": [
+				{
+					"name": "Create new post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('max-age=0, private, must-revalidate');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response includes correct data fields\", function(){\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    \r",
+									"    pm.expect(jsonData).to.include.all.keys('id', 'user_id', 'title','body');\r",
+									"     \r",
+									"    pm.expect(jsonData.id).to.be.finite;\r",
+									"    pm.expect(jsonData.user_id).to.be.finite;\r",
+									"    pm.expect(jsonData.title).to.be.a('string');\r",
+									"    pm.expect(jsonData.body).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"POST response data valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    pm.collectionVariables.set(\"post_id\", jsonData.id);\r",
+									"    \r",
+									"    pm.expect(jsonData.user_id).to.eql(pm.collectionVariables.get(\"user_id\"));\r",
+									"    pm.expect(jsonData.body).to.eql(pm.collectionVariables.get(\"post_body\"));\r",
+									"    pm.expect(jsonData.title).to.eql(pm.collectionVariables.get(\"post_title\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "{{post_title}}",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "{{post_body}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{urlPosts}}",
+							"host": [
+								"{{urlPosts}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post was created",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('max-age=0, private, must-revalidate');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Resource was found\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData).to.not.include.all.keys('message');\r",
+									"    pm.expect(jsonData.message).to.not.eql(\"Resource not found\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response includes correct data fields\", function(){\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    \r",
+									"    pm.expect(jsonData).to.include.all.keys('id', 'user_id', 'title','body');\r",
+									"     \r",
+									"    pm.expect(jsonData.id).to.be.finite;\r",
+									"    pm.expect(jsonData.user_id).to.be.finite;\r",
+									"    pm.expect(jsonData.title).to.be.a('string');\r",
+									"    pm.expect(jsonData.body).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response data is valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"post_id\"));\r",
+									"    pm.expect(jsonData.user_id).to.eql(pm.collectionVariables.get(\"user_id\"));\r",
+									"    pm.expect(jsonData.body).to.eql(pm.collectionVariables.get(\"post_body\"));\r",
+									"    pm.expect(jsonData.title).to.eql(pm.collectionVariables.get(\"post_title\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{urlPosts}}/{{post_id}}",
+							"host": [
+								"{{urlPosts}}"
+							],
+							"path": [
+								"{{post_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "YYY",
+			"item": [
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{urlUsers}}/{{user_id}}",
+							"host": [
+								"{{urlUsers}}"
+							],
+							"path": [
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "b638d3130d1206c2bbb40521cb56fc8fc7355a2943a7da1568e3b51421532874",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_name",
+			"value": "Alice Poster",
+			"type": "string"
+		},
+		{
+			"key": "user_email",
+			"value": "aposter_imposter@totallylegit.bro",
+			"type": "string"
+		},
+		{
+			"key": "user_gender",
+			"value": "female",
+			"type": "string"
+		},
+		{
+			"key": "user_status",
+			"value": "inactive",
+			"type": "string"
+		},
+		{
+			"key": "post_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "post_title",
+			"value": "Proin sed aliquet dui. Aenean.",
+			"type": "string"
+		},
+		{
+			"key": "post_body",
+			"value": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis a nisl a nunc sollicitudin sollicitudin. Nulla a gravida velit, quis lobortis nunc. Nam sit amet risus at dolor pretium dictum. Praesent non urna leo. Quisque aliquam, ipsum in rutrum tempor, turpis odio tempor nulla, a pretium purus odio nec erat. In metus ligula, auctor nec arcu quis, elementum sagittis lacus.",
+			"type": "string"
+		}
+	]
+}
