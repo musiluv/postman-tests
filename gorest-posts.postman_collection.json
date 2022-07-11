@@ -121,6 +121,10 @@
 									"    pm.response.to.have.status(201);\r",
 									"});\r",
 									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
 									"    var headers = pm.response.headers;\r",
 									"\r",
@@ -212,6 +216,10 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
 									"    var headers = pm.response.headers;\r",
 									"\r",
@@ -230,16 +238,6 @@
 									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
 									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
 									"});\r",
-									"\r",
-									"\r",
-									"/*\r",
-									"pm.test(\"Resource was found\", function () {\r",
-									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData).to.be.an(\"array\");\r",
-									"    pm.expect(jsonData).to.not.include.all.keys('message');\r",
-									"    pm.expect(jsonData.message).to.not.eql(\"Resource not found\");\r",
-									"});\r",
-									"*/\r",
 									"\r",
 									"\r",
 									"\r",
@@ -309,6 +307,10 @@
 								"exec": [
 									"pm.test(\"Successful POST request\", function () {\r",
 									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
@@ -391,6 +393,10 @@
 									"    pm.response.to.have.status(422);\r",
 									"});\r",
 									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
 									"    var headers = pm.response.headers;\r",
 									"\r",
@@ -468,6 +474,10 @@
 								"exec": [
 									"pm.test(\"Successful POST request\", function () {\r",
 									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
@@ -561,6 +571,10 @@
 									"    pm.response.to.have.status(422);\r",
 									"});\r",
 									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
 									"    var headers = pm.response.headers;\r",
 									"\r",
@@ -637,6 +651,10 @@
 								"exec": [
 									"pm.test(\"Successful POST request\", function () {\r",
 									"    pm.response.to.have.status(422);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
@@ -717,6 +735,10 @@
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
 									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
 									"    var headers = pm.response.headers;\r",
 									"\r",
@@ -783,6 +805,81 @@
 			]
 		},
 		{
+			"name": "get",
+			"item": [
+				{
+					"name": "Fail to get invalid user's posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('max-age=0, private, must-revalidate');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Resource was found\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData).to.be.empty;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{urlUsers}}/9999999999/posts",
+							"host": [
+								"{{urlUsers}}"
+							],
+							"path": [
+								"9999999999",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "delete post",
 			"item": [
 				{
@@ -794,6 +891,10 @@
 								"exec": [
 									"pm.test(\"Successful DELETE request\", function () {\r",
 									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
@@ -848,6 +949,10 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
@@ -919,6 +1024,10 @@
 								"exec": [
 									"pm.test(\"Successful POST request\", function () {\r",
 									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
@@ -1012,6 +1121,10 @@
 									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
 									"});\r",
 									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
 									"    var headers = pm.response.headers;\r",
 									"\r",
@@ -1060,6 +1173,10 @@
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"Verify response headers\", function(){\r",
