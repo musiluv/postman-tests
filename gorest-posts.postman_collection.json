@@ -491,32 +491,25 @@
 									"\r",
 									"\r",
 									"\r",
-									"pm.test(\"Response includes correct message\", function(){\r",
+									"\r",
+									"pm.test(\"Error message: User must exist\", function(){\r",
 									"    var jsonData = pm.response.json();    \r",
 									"\r",
-									"    var msg1 = {field: \"user\", message: \"must exist\"};\r",
-									"    var msg2={\r",
+									"    var msg = {\"field\": \"user\", \"message\": \"must exist\"};\r",
+									"\r",
+									"    pm.expect(jsonData).to.deep.include(msg);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message: User_id can't be blank, is not a number\", function(){\r",
+									"    var jsonData = pm.response.json();    \r",
+									"\r",
+									"    var msg={\r",
 									"        \"field\": \"user_id\",\r",
 									"        \"message\": \"can't be blank, is not a number\"\r",
 									"    };\r",
 									"\r",
-									"    var rsp = [msg1,msg2];\r",
-									"    var fields = [msg1.field, msg2.field];\r",
-									"\r",
-									"\r",
-									"\r",
-									"    jsonData.forEach((function(obj){\r",
-									"        console.log(obj);\r",
-									"\r",
-									"        pm.expect(obj).to.have.keys(\"field\", \"message\");\r",
-									"        pm.expect(obj.field).to.be.oneOf(fields);\r",
-									"        \r",
-									"        var index = fields.indexOf(obj.field);\r",
-									"\r",
-									"        pm.expect(obj.message).to.eql(rsp[index].message);\r",
-									"\r",
-									"\r",
-									"    }));\r",
+									"    pm.expect(jsonData).to.deep.include(msg);\r",
 									"\r",
 									"});\r",
 									""
@@ -665,9 +658,6 @@
 									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
 									"});\r",
 									"\r",
-									"\r",
-									"\r",
-									"\r",
 									"pm.test(\"Response includes correct message\", function(){\r",
 									"    var jsonData = pm.response.json()[0];\r",
 									"    pm.expect(jsonData).to.be.an(\"object\");\r",
@@ -678,7 +668,6 @@
 									"    pm.expect(jsonData.message).to.eql(\"is too long (maximum is 200 characters)\");\r",
 									"\r",
 									"});\r",
-									"\r",
 									""
 								],
 								"type": "text/javascript"
@@ -794,14 +783,259 @@
 			]
 		},
 		{
-			"name": "delete",
-			"item": []
-		},
-		{
-			"name": "TEARDOWN",
+			"name": "delete post",
 			"item": [
 				{
-					"name": "[[TEARDOWN]] delete user",
+					"name": "Delete post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('no-cache');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response is empty\", function () {\r",
+									"\r",
+									"    pm.response.to.not.be.withBody;\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{urlPosts}}/{{post_id}}",
+							"host": [
+								"{{urlPosts}}"
+							],
+							"path": [
+								"{{post_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post was deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('max-age=0, private, must-revalidate');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Resource was found\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData).to.not.include.all.keys('message');\r",
+									"    pm.expect(jsonData.message).to.not.eql(\"Resource not found\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Returned array of user's posts contains 0 objects\", function() {\r",
+									"\r",
+									"    pm.expect(pm.response.json()).to.have.length(0);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlUsers}}/{{user_id}}/posts",
+							"host": [
+								"{{urlUsers}}"
+							],
+							"path": [
+								"{{user_id}}",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete user",
+			"item": [
+				{
+					"name": "Create new post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('max-age=0, private, must-revalidate');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response includes correct data fields\", function(){\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    \r",
+									"    pm.expect(jsonData).to.include.all.keys('id', 'user_id', 'title','body');\r",
+									"     \r",
+									"    pm.expect(jsonData.id).to.be.finite;\r",
+									"    pm.expect(jsonData.user_id).to.be.finite;\r",
+									"    pm.expect(jsonData.title).to.be.a('string');\r",
+									"    pm.expect(jsonData.body).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"POST response data valid\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    \r",
+									"    pm.collectionVariables.set(\"post_id\", jsonData.id);\r",
+									"    \r",
+									"    pm.expect(jsonData.user_id).to.eql(pm.collectionVariables.get(\"user_id\"));\r",
+									"    pm.expect(jsonData.body).to.eql(pm.collectionVariables.get(\"post_body\"));\r",
+									"    pm.expect(jsonData.title).to.eql(pm.collectionVariables.get(\"post_title\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "{{post_title}}",
+									"type": "text"
+								},
+								{
+									"key": "body",
+									"value": "{{post_body}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{urlPosts}}",
+							"host": [
+								"{{urlPosts}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('no-cache');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response is empty\", function () {\r",
+									"\r",
+									"    pm.response.to.not.be.withBody;\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -812,6 +1046,75 @@
 							],
 							"path": [
 								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users's posts get deleted when user is deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify response headers\", function(){\r",
+									"    var headers = pm.response.headers;\r",
+									"\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"    pm.expect(headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Connection\");\r",
+									"    pm.expect(headers.get('Connection')).to.eql('keep-alive');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Cache-Control\");\r",
+									"    pm.expect(headers.get('Cache-Control')).to.eql('max-age=0, private, must-revalidate');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Strict-Transport-Security\");\r",
+									"    pm.expect(headers.get('Strict-Transport-Security')).to.eql('max-age=63072000; includeSubDomains');\r",
+									"\r",
+									"    pm.response.to.have.header(\"Transfer-Encoding\");\r",
+									"    pm.expect(headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Resource was found\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"    pm.expect(jsonData).to.not.include.all.keys('message');\r",
+									"    pm.expect(jsonData.message).to.not.eql(\"Resource not found\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"User's posts were deleted\", function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var msg = {\r",
+									"    \"id\": pm.collectionVariables.get(\"post_id\"),\r",
+									"    \"user_id\": pm.collectionVariables.get(\"user_id\"),\r",
+									"    \"title\": pm.collectionVariables.get(\"post_title\"),\r",
+									"    \"body\": pm.collectionVariables.get(\"post_body\")\r",
+									"    }\r",
+									"\r",
+									"    pm.expect(jsonData).to.not.deep.include(msg);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{urlPosts}}",
+							"host": [
+								"{{urlPosts}}"
 							]
 						}
 					},
