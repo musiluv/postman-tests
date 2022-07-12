@@ -1311,6 +1311,26 @@
 			"key": "id",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "urlBase",
+			"value": "https://gorest.co.in/public/v2",
+			"type": "string"
+		},
+		{
+			"key": "urlUsers",
+			"value": "https://gorest.co.in/public/v2/users",
+			"type": "string"
+		},
+		{
+			"key": "urlPosts",
+			"value": "https://gorest.co.in/public/v2/posts",
+			"type": "string"
+		},
+		{
+			"key": "urlComments",
+			"value": "https://gorest.co.in/public/v2/comments",
+			"type": "string"
 		}
 	]
 }

@@ -1315,6 +1315,26 @@
 			"key": "post_body_long",
 			"value": "Maecenas mi arcu, laoreet sagittis lacus sit amet, volutpat hendrerit sem. Pellentesque nec nibh mauris. Aliquam erat volutpat. Pellentesque a tellus non diam auctor eleifend. Aliquam eleifend sed odio semper malesuada. Nullam viverra enim ac tortor sodales, vel rutrum eros finibus. Phasellus lacus nibh, fringilla at ligula non, lacinia suscipit nibh. Nulla in venenatis metus, non euismod nunc. Fusce tincidunt felis vitae condimentum aliquet. Nullam vel suscipit nunc. Mauris sagittis et nibh nec scelerisque. Ut pulvinar sodales lectus a sapien.",
 			"type": "string"
+		},
+		{
+			"key": "urlBase",
+			"value": "https://gorest.co.in/public/v2",
+			"type": "string"
+		},
+		{
+			"key": "urlUsers",
+			"value": "https://gorest.co.in/public/v2/users",
+			"type": "string"
+		},
+		{
+			"key": "urlPosts",
+			"value": "https://gorest.co.in/public/v2/posts",
+			"type": "string"
+		},
+		{
+			"key": "urlComments",
+			"value": "https://gorest.co.in/public/v2/comments",
+			"type": "string"
 		}
 	]
 }
